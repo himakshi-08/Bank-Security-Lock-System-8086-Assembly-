@@ -1,92 +1,91 @@
 # Bank Security Lock System (8086 Assembly)
 
 This project is an **Employee Login & Security System** implemented in **8086 Assembly language** using the EMU8086 environment.  
-It supports employee authentication, password verification, login attempt tracking, and secure password updates.
-
-The system is designed to simulate a small **bank security lock mechanism**, ensuring that only valid employees with correct credentials can access the system.  
-After **3 incorrect attempts**, the account is locked.
+It simulates a small-scale **bank security lock mechanism**, ensuring only valid employees with correct credentials can access the system.  
+After **3 incorrect password attempts**, the account is locked automatically.
 
 ---
 
 ## 🚀 Features
 
-### ✔ Employee Authentication
-- Accepts employee ID numbers
-- Searches ID inside a stored employee table (20 employees)
-- Validates identity before password prompt
+ ✔ Employee Authentication
+- Accepts and verifies employee IDs.
+- Searches the ID inside a 20-employee lookup table.
 
-### ✔ Password Validation
-- Each employee has a predefined password (0–15)
-- Password is matched with the correct employee index
-- Up to 3 invalid attempts allowed
+✔ Password Validation
+- Each employee has a stored password (0–15).
+- Password is checked based on index mapping.
+- After a correct login, user gets an **Access Granted** message.
 
-### ✔ Auto Account Locking
-- After **3 wrong password attempts**, the user is locked out
-- Lock persists until program restart
+ ✔ Auto Account Locking
+- Allows only **3 wrong attempts**.
+- Locks the account after 3 failed tries.
 
-### ✔ Password Update Option
-- After successful login, employee can update password
-- New password replaces old one in `PassTable`
-
-### ✔ Fully Menu-Driven Text Interface
-- Uses DOS interrupts (`int 21h`)
-- Works in EMU8086 with `emu8086.inc` macros
+ ✔ Password Update
+- After successful login, the user can:
+  - Press **Y** to change password  
+  - Enter a new password (0–15)
+- Password table is updated dynamically.
 
 ---
 
-## 📂 Data Structures Used
-
-| Table | Size | Description |
-|-------|------|-------------|
-| `EmpTable` | 20× WORD | Stores Employee IDs |
-| `PassTable` | 20× BYTE | Stores Employee Passwords |
-| `Attempts` | 20× BYTE | Tracks wrong login attempts |
-| `CurrentIndex` | 1 BYTE | Stores index during login |
+## 📂 Data Used Internally
+| `EmpTable` | 20 × WORD | Stores employee ID numbers |
+| `PassTable` | 20 × BYTE | Stores passwords |
+| `Attempts` | 20 × BYTE | Tracks wrong login count |
+| `CurrentIndex` | 1 BYTE | Stores matched employee index |
 
 ---
 
-## 🛠 Technologies / Tools
+## 🛠 Tools & Technologies
 
-- **8086 Assembly Language**
-- **EMU8086 IDE**
-- `emu8086.inc` (macro file)
-- DOS Interrupts (`int 21h`)
-
----
-
-## ▶ Program Flow
-
-1. Show title  
-2. Ask user to enter Employee ID  
-3. Search ID in `EmpTable`  
-4. If not found → show "ID not found"  
-5. If account locked → show "Account locked"  
-6. If found → ask for password  
-7. Compare with stored password  
-8. If wrong → increment attempts  
-9. If correct → reset attempts and allow login  
-10. Optionally change password  
-11. Return to main screen  
+- **8086 Assembly**
+- **EMU8086 Emulator**
+- DOS interrupts (`int 21h`)
+- `emu8086.inc` macro library
 
 ---
 
-## 📌 Important Constants
+## ▶ How to Run the Program
 
-```asm
-MAX_EMP EQU 20
-MAX_ATTEMPTS EQU 3
+Follow these steps to execute the project smoothly:
 
-▶ How to Run the Program
-1️⃣ Install EMU8086
-
-Download from:
+### 1️⃣ Install **EMU8086**
+Download from:  
 https://emu8086-microprocessor-emulator.software.informer.com/
 
-2️⃣ Place emu8086.inc in the same folder as your program.
-3️⃣ Assemble & Run
+### 2️⃣ Keep Required Files Together
+Place the following files in the same folder:  
+- `BankLockSystem.asm` (your program file)  
+- `emu8086.inc` (macro file required by the program)
 
-Open the code in EMU8086
+### 3️⃣ Assemble & Run the Program
+1. Open **EMU8086**  
+2. Load your `.asm` file  
+3. Click **Compile**  
+4. Click **Run**  
+5. Use the EMU8086 console to test:  
+   - Entering employee IDs  
+   - Attempting passwords  
+   - Testing incorrect attempts  
+   - Trying password change option  
 
-Click Compile → Run
+You now have a working Bank Security Lock Simulation.
 
-Use the console to test employee IDs and passwords
+---
+
+## 📘 Example Employee Credentials
+
+| Employee ID | Password |
+|-------------|----------|
+| 1001        | 4        |
+| 1002        | 7        |
+| 1003        | 3        |
+| 1013        | 9        |
+| 2003        | 2        |
+| 3005        | 13       |
+
+(You can test all 20 from the table inside the program.)
+
+---
+
